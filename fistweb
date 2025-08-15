@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>University Student Portal</title>
+    <style>
+        :root {
+            --primary-color: #ff69b4;
+            --secondary-color: #ffb6c1;
+            --dark-pink: #db7093;
+            --light-pink: #fff0f5;
+            --text-color: #333;
+            --white: #ffffff;
+            --average-row-color: #e6f7ff;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--light-pink);
+            color: var(--text-color);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 20px 0;
+            text-align: center;
+            border-radius: 0 0 10px 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+        
+        .login-container {
+            background-color: var(--white);
+            width: 400px;
+            margin: 50px auto;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        
+        .login-container h2 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--dark-pink);
+            font-weight: bold;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--secondary-color);
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--secondary-color);
+            border-radius: 5px;
+            font-size: 16px;
+            background-color: var(--white);
+        }
+        
+        .btn {
+            background-color: var(--primary-color);
+            color: var(--white);
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: var(--dark-pink);
+        }
+        
+        .user-type {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        
+        .user-type label {
+            margin: 0 10px;
+            cursor: pointer;
+        }
+        
+        .dashboard {
+            display: none;
+            background-color: var(--white);
+            margin: 30px auto;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--secondary-color);
+        }
+        
+        .welcome-message {
+            color: var(--primary-color);
+            font-size: 1.5em;
+        }
+        
+        .logout-btn {
+            background-color: var(--dark-pink);
+            color: var(--white);
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        .semester-tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--secondary-color);
+        }
+        
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            background-color: var(--light-pink);
+            margin-right: 5px;
+            border-radius: 5px 5px 0 0;
+        }
+        
+        .tab.active {
+            background-color: var(--primary-color);
+            color: var(--white);
+        }
+        
+        .grades-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        
+        .grades-table th, .grades-table td {
+            border: 1px solid var(--secondary-color);
+            padding: 10px;
+            text-align: left;
+        }
+        
+        .grades-table th {
+            background-color: var(--primary-color);
+            color: var(--white);
+        }
+        
+        .grades-table tr:nth-child(even) {
+            background-color: var(--light-pink);
+        }
+        
+        .edit-grade {
+            background-color: var(--secondary-color);
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        
+        .edit-grade:hover {
+            background-color: var(--dark-pink);
+            color: var(--white);
+        }
+        
+        .save-btn {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            color: var(--dark-pink);
+            font-size: 0.9em;
+        }
+        
+        .error-message {
+            color: red;
+            margin-top: 10px;
+        }
+        
+        .subject-input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        
+        .grade-dropdown {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: white;
+        }
+        
+        .changes-saved {
+            color: #4CAF50;
+            font-weight: bold;
+            margin-left: 10px;
+            display: none;
+        }
+        
+        .average-row {
+            background-color: var(--average-row-color) !important;
+            font-weight: bold;
+        }
+        
+        .average-label {
+            text-align: right;
+            padding-right: 10px;
+        }
+        
+        .average-value {
+            font-weight: bold;
+        }
+        
+        .read-only-grade {
+            background-color: #f5f5f5;
+            padding: 8px;
+            border-radius: 4px;
+            display: inline-block;
+            min-width: 50px;
+            text-align: center;
+        }
+        
+        .read-only-field {
+            background-color: #f5f5f5;
+            padding: 8px;
+            border-radius: 4px;
+            display: inline-block;
+            width: 100%;
+            box-sizing: border-box;
+            border: 1px solid #ddd;
+        }
+        
+        .disabled-field {
+            background-color: #f5f5f5;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Student Portal</h1>
+        </div>
+    </header>
+    
+    <div class="container">
+        <!-- Login Form -->
+        <div id="login-section" class="login-container">
+            <h2>Login to Your Account</h2>
+            <div class="user-type">
+                <label>
+                    <input type="radio" name="userType" value="student" checked> Student
+                </label>
+                <label>
+                    <input type="radio" name="userType" value="professor"> Professor
+                </label>
+            </div>
+            <div class="form-group">
+                <label for="userID">ID Number</label>
+                <input type="text" id="userID" placeholder="Enter your ID">
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="Enter your password">
+            </div>
+            <div id="error-message" class="error-message"></div>
+            <button class="btn" onclick="login()">Login</button>
+        </div>
+        
+        <!-- Student Dashboard -->
+        <div id="student-dashboard" class="dashboard">
+            <div class="dashboard-header">
+                <div class="welcome-message">Welcome, Student <span id="student-id"></span>!</div>
+                <button class="logout-btn" onclick="logout()">Logout</button>
+            </div>
+            
+            <div class="semester-tabs">
+                <div class="tab active" onclick="changeSemester(1)">1st Year</div>
+                <div class="tab" onclick="changeSemester(2)">2nd Year</div>
+                <div class="tab" onclick="changeSemester(3)">3rd Year</div>
+                <div class="tab" onclick="changeSemester(4)">4th Year</div>
+            </div>
+            
+            <h3 id="semester-title">1st Year Grades</h3>
+            <table class="grades-table">
+                <thead>
+                    <tr>
+                        <th>Subject Code</th>
+                        <th>Subject Name</th>
+                        <th>Units</th>
+                        <th>Midterm Grade</th>
+                        <th>Final Grade</th>
+                        <th>Final Average</th>
+                    </tr>
+                </thead>
+                <tbody id="student-grades">
+                    <!-- Grades will be populated here by JavaScript -->
+                </tbody>
+                <tfoot>
+                    <tr class="average-row">
+                        <td colspan="3" class="average-label">Semester Weighted Average:</td>
+                        <td colspan="3" class="average-value" id="semester-average">N/A</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+        
+        <!-- Professor Dashboard -->
+        <div id="professor-dashboard" class="dashboard">
+            <div class="dashboard-header">
+                <div class="welcome-message">Welcome, Professor <span id="professor-id"></span>!</div>
+                <button class="logout-btn" onclick="logout()">Logout</button>
+            </div>
+            
+            <div class="form-group">
+                <label for="student-select">Select Student:</label>
+                <select id="student-select" onchange="loadStudentGrades()">
+                    <option value="">-- Select a student --</option>
+                    <!-- Student options will be populated by JavaScript -->
+                </select>
+            </div>
+            
+            <div class="semester-tabs">
+                <div class="tab active" onclick="changeProfessorSemester(1)">1st Year</div>
+                <div class="tab" onclick="changeProfessorSemester(2)">2nd Year</div>
+                <div class="tab" onclick="changeProfessorSemester(3)">3rd Year</div>
+                <div class="tab" onclick="changeProfessorSemester(4)">4th Year</div>
+            </div>
+            
+            <h3 id="professor-semester-title">1st Year Grades</h3>
+            <table class="grades-table">
+                <thead>
+                    <tr>
+                        <th>Subject Code</th>
+                        <th>Subject Name</th>
+                        <th>Units</th>
+                        <th>Midterm Grade</th>
+                        <th>Final Grade</th>
+                        <th>Final Average</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="professor-grades">
+                    <!-- Grades will be populated here by JavaScript -->
+                </tbody>
+                <tfoot>
+                    <tr class="average-row">
+                        <td colspan="3" class="average-label">Semester Weighted Average:</td>
+                        <td colspan="4" class="average-value" id="professor-semester-average">N/A</td>
+                    </tr>
+                </tfoot>
+            </table>
+            <div class="form-group">
+                <button class="btn" onclick="addNewSubject()">Add New Subject</button>
+                <span id="changes-saved" class="changes-saved">Changes saved!</span>
+            </div>
+        </div>
+    </div>
+    
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2023 University Portal. All rights reserved.</p>
+        </div>
+    </footer>
+    
+    <script>
+        // Permanent Data Storage System
+        class StudentGradingSystem {
+            constructor() {
+                this.students = {};
+                this.subjects = {};
+                this.professors = {};
+                this.loadData();
+            }
+            
+            loadData() {
+                try {
+                    const data = localStorage.getItem('studentGradingData');
+                    if (data) {
+                        const parsedData = JSON.parse(data);
+                        this.students = parsedData.students || {};
+                        this.subjects = parsedData.subjects || {};
+                        this.professors = parsedData.professors || {};
+                        console.log("Data loaded successfully");
+                    } else {
+                        console.log("No data found, initializing sample data");
+                        this.initializeSampleData();
+                    }
+                } catch (e) {
+                    console.error("Error loading data:", e);
+                    this.initializeSampleData();
+                }
+            }
+            
+            saveData() {
+                const data = {
+                    students: this.students,
+                    subjects: this.subjects,
+                    professors: this.professors
+                };
+                localStorage.setItem('studentGradingData', JSON.stringify(data));
+                console.log("Data saved successfully");
+            }
+            
+            initializeSampleData() {
+                console.log("Initializing sample data");
+                this.students = {};
+                this.subjects = {};
+                this.professors = {};
+                
+                // Create sample students (2021100 to 2021200)
+                for (let i = 2021100; i <= 2021200; i++) {
+                    this.students[i] = {
+                        name: `Student ${i}`,
+                        grades: {
+                            1: [
+                                { code: 'MATH101', name: 'Calculus I', units: 3, midtermGrade: undefined, finalGrade: undefined, finalAverage: undefined, createdBy: 'system' },
+                                { code: 'PHYS101', name: 'Physics I', units: 3, midtermGrade: undefined, finalGrade: undefined, finalAverage: undefined, createdBy: 'system' }
+                            ],
+                            2: [],
+                            3: [],
+                            4: []
+                        },
+                        gpa: 0.0
+                    };
+                }
+                
+                // Create sample professors (Prof2021010 to Prof2021020)
+                for (let i = 2021010; i <= 2021020; i++) {
+                    this.professors[`Prof${i}`] = {
+                        name: `Professor ${i}`,
+                        createdSubjects: []
+                    };
+                }
+                
+                // Create sample subjects
+                const sampleSubjects = [
+                    { code: 'MATH101', name: 'Calculus I', units: 3 },
+                    { code: 'PHYS101', name: 'Physics I', units: 3 },
+                    { code: 'CHEM101', name: 'Chemistry I', units: 3 },
+                    { code: 'ENG101', name: 'English Composition', units: 2 },
+                    { code: 'CS101', name: 'Introduction to Programming', units: 4 }
+                ];
+                
+                sampleSubjects.forEach(subject => {
+                    this.subjects[subject.code] = {
+                        name: subject.name,
+                        units: subject.units,
+                        createdBy: 'system'
+                    };
+                });
+                
+                this.saveData();
+            }
+            
+            addStudent(studentId, name) {
+                if (studentId in this.students) {
+                    console.log(`Student ${studentId} already exists`);
+                    return false;
+                }
+                
+                this.students[studentId] = {
+                    name: name,
+                    grades: {
+                        1: [],
+                        2: [],
+                        3: [],
+                        4: []
+                    },
+                    gpa: 0.0
+                };
+                
+                this.saveData();
+                console.log(`Student ${studentId} added successfully`);
+                return true;
+            }
+            
+            addSubject(subjectCode, subjectName, units, professorId) {
+                if (subjectCode in this.subjects) {
+                    console.log(`Subject ${subjectCode} already exists`);
+                    return false;
+                }
+                
+                this.subjects[subjectCode] = {
+                    name: subjectName,
+                    units: units,
+                    createdBy: professorId || 'system'
+                };
+                
+                if (professorId) {
+                    if (!this.professors[professorId].createdSubjects) {
+                        this.professors[professorId].createdSubjects = [];
+                    }
+                    this.professors[professorId].createdSubjects.push(subjectCode);
+                }
+                
+                this.saveData();
+                console.log(`Subject ${subjectCode} added successfully`);
+                return true;
+            }
+            
+            addGrade(studentId, subjectCode, midtermGrade, finalGrade, semester, professorId) {
+                if (!(studentId in this.students)) {
+                    console.log(`Student ${studentId} not found`);
+                    return false;
+                }
+                
+                if (!(subjectCode in this.subjects)) {
+                    console.log(`Subject ${subjectCode} not found`);
+                    return false;
+                }
+                
+                // Find or create the subject in the student's record
+                let subjectFound = false;
+                for (let i = 0; i < this.students[studentId].grades[semester].length; i++) {
+                    if (this.students[studentId].grades[semester][i].code === subjectCode) {
+                        this.students[studentId].grades[semester][i].midtermGrade = midtermGrade;
+                        this.students[studentId].grades[semester][i].finalGrade = finalGrade;
+                        this.students[studentId].grades[semester][i].finalAverage = 
+                            this.calculateFinalAverage(midtermGrade, finalGrade);
+                        subjectFound = true;
+                        break;
+                    }
+                }
+                
+                if (!subjectFound) {
+                    this.students[studentId].grades[semester].push({
+                        code: subjectCode,
+                        name: this.subjects[subjectCode].name,
+                        units: this.subjects[subjectCode].units,
+                        midtermGrade: midtermGrade,
+                        finalGrade: finalGrade,
+                        finalAverage: this.calculateFinalAverage(midtermGrade, finalGrade),
+                        createdBy: professorId || 'system'
+                    });
+                }
+                
+                this.calculateGPA(studentId);
+                this.saveData();
+                console.log(`Grade added for student ${studentId} in subject ${subjectCode}`);
+                return true;
+            }
+            
+            calculateFinalAverage(midtermGrade, finalGrade) {
+                if (midtermGrade === undefined || finalGrade === undefined) {
+                    console.log("Cannot calculate average - missing grades");
+                    return undefined;
+                }
+                // 40% midterm + 60% final
+                return parseFloat((midtermGrade * 0.4 + finalGrade * 0.6).toFixed(2));
+            }
+            
+            calculateGPA(studentId) {
+                if (!(studentId in this.students)) {
+                    console.log(`Student ${studentId} not found for GPA calculation`);
+                    return;
+                }
+                
+                let totalPoints = 0;
+                let totalUnits = 0;
+                
+                for (let semester = 1; semester <= 4; semester++) {
+                    this.students[studentId].grades[semester].forEach(subject => {
+                        if (subject.finalAverage !== undefined) {
+                            const gradePoint = this.convertToGradePoint(subject.finalAverage);
+                            totalPoints += gradePoint * subject.units;
+                            totalUnits += subject.units;
+                        }
+                    });
+                }
+                
+                if (totalUnits > 0) {
+                    this.students[studentId].gpa = parseFloat((totalPoints / totalUnits).toFixed(2));
+                    console.log(`GPA calculated for student ${studentId}: ${this.students[studentId].gpa}`);
+                } else {
+                    this.students[studentId].gpa = 0.0;
+                    console.log(`No grades found for student ${studentId}, GPA set to 0.0`);
+                }
+            }
+            
+            convertToGradePoint(grade) {
+                // Convert 1.00-5.00 scale to grade points (4.0 scale)
+                if (grade <= 1.24) return 4.0;  // 1.00-1.24 = 4.0
+                else if (grade <= 1.74) return 3.5; // 1.25-1.74 = 3.5
+                else if (grade <= 2.24) return 3.0; // 1.75-2.24 = 3.0
+                else if (grade <= 2.74) return 2.5; // 2.25-2.74 = 2.5
+                else if (grade <= 3.24) return 2.0; // 2.75-3.24 = 2.0
+                else if (grade <= 3.74) return 1.5; // 3.25-3.74 = 1.5
+                else if (grade <= 4.24) return 1.0; // 3.75-4.24 = 1.0
+                else return 0.0;                   // 4.25-5.00 = 0.0
+            }
+            
+            getSemesterAverage(studentId, semester) {
+                if (!(studentId in this.students)) {
+                    console.log(`Student ${studentId} not found for semester average calculation`);
+                    return undefined;
+                }
+                
+                let totalWeightedGrade = 0;
+                let totalUnits = 0;
+                let hasGrades = false;
+                
+                this.students[studentId].grades[semester].forEach(subject => {
+                    if (subject.finalAverage !== undefined) {
+                        totalWeightedGrade += subject.finalAverage * subject.units;
+                        totalUnits += subject.units;
+                        hasGrades = true;
+                    }
+                });
+                
+                if (!hasGrades) {
+                    console.log(`No grades found for student ${studentId} semester ${semester}`);
+                    return undefined;
+                }
+                
+                const average = parseFloat((totalWeightedGrade / totalUnits).toFixed(2));
+                console.log(`Semester average calculated for student ${studentId}: ${average}`);
+                return average;
+            }
+        }
+
+        // Initialize the grading system
+        const gradingSystem = new StudentGradingSystem();
+        
+        // Global variables
+        let currentUser = null;
+        let currentUserType = null;
+        let currentSemester = 1;
+        let professorCurrentSemester = 1;
+        let selectedStudentId = null;
+        
+        function login() {
+            console.log("Login attempt");
+            const userType = document.querySelector('input[name="userType"]:checked').value;
+            const userId = document.getElementById('userID').value.trim();
+            const password = document.getElementById('password').value;
+            const errorElement = document.getElementById('error-message');
+            errorElement.textContent = '';
+            
+            if (userType === 'student') {
+                console.log(`Student login attempt: ${userId}`);
+                // Validate student ID (2021100-2021200)
+                const studentIdNum = parseInt(userId);
+                if (isNaN(studentIdNum) || studentIdNum < 2021100 || studentIdNum > 2021200) {
+                    errorElement.textContent = 'Invalid student ID. Must be between 2021100 and 2021200.';
+                    console.log("Invalid student ID range");
+                    return;
+                }
+                
+                if (!(userId in gradingSystem.students)) {
+                    errorElement.textContent = 'Student not found.';
+                    console.log("Student not found in system");
+                    return;
+                }
+                
+                // Simple password validation (student ID must match password)
+                if (userId !== password) {
+                    errorElement.textContent = 'Invalid password. Student ID must match password.';
+                    console.log("Password doesn't match student ID");
+                    return;
+                }
+                
+                currentUser = userId;
+                currentUserType = 'student';
+                document.getElementById('student-id').textContent = userId;
+                document.getElementById('login-section').style.display = 'none';
+                document.getElementById('student-dashboard').style.display = 'block';
+                console.log(`Student ${userId} logged in successfully`);
+                loadStudentGradesForStudent();
+                
+            } else if (userType === 'professor') {
+                console.log(`Professor login attempt: ${userId}`);
+                // Validate professor ID (Prof2021010-Prof2021020)
+                if (!userId.startsWith('Prof')) {
+                    errorElement.textContent = 'Professor ID must start with "Prof".';
+                    console.log("Invalid professor ID format");
+                    return;
+                }
+                
+                const profIdNum = parseInt(userId.substring(4));
+                if (isNaN(profIdNum) || profIdNum < 2021010 || profIdNum > 2021020) {
+                    errorElement.textContent = 'Invalid professor ID. Must be between Prof2021010 and Prof2021020.';
+                    console.log("Invalid professor ID range");
+                    return;
+                }
+                
+                if (!(userId in gradingSystem.professors)) {
+                    errorElement.textContent = 'Professor not found.';
+                    console.log("Professor not found in system");
+                    return;
+                }
+                
+                // Simple password validation (professor ID number must match password)
+                if (userId.substring(4) !== password) {
+                    errorElement.textContent = 'Invalid password. Professor ID number must match password.';
+                    console.log("Password doesn't match professor ID");
+                    return;
+                }
+                
+                currentUser = userId;
+                currentUserType = 'professor';
+                document.getElementById('professor-id').textContent = userId.substring(4);
+                document.getElementById('login-section').style.display = 'none';
+                document.getElementById('professor-dashboard').style.display = 'block';
+                console.log(`Professor ${userId} logged in successfully`);
+                populateStudentDropdown();
+            }
+        }
+        
+        function logout() {
+            console.log(`Logging out ${currentUser}`);
+            currentUser = null;
+            currentUserType = null;
+            document.getElementById('login-section').style.display = 'block';
+            document.getElementById('student-dashboard').style.display = 'none';
+            document.getElementById('professor-dashboard').style.display = 'none';
+            document.getElementById('userID').value = '';
+            document.getElementById('password').value = '';
+            document.getElementById('error-message').textContent = '';
+        }
+        
+        function changeSemester(semester) {
+            console.log(`Changing to semester ${semester}`);
+            currentSemester = semester;
+            document.getElementById('semester-title').textContent = `${getOrdinal(semester)} Year Grades`;
+            
+            // Update active tab
+            const tabs = document.querySelectorAll('#student-dashboard .tab');
+            tabs.forEach((tab, index) => {
+                if (index === semester - 1) {
+                    tab.classList.add('active');
+                } else {
+                    tab.classList.remove('active');
+                }
+            });
+            
+            loadStudentGradesForStudent();
+        }
+        
+        function changeProfessorSemester(semester) {
+            console.log(`Professor changing to semester ${semester}`);
+            professorCurrentSemester = semester;
+            document.getElementById('professor-semester-title').textContent = `${getOrdinal(semester)} Year Grades`;
+            
+            // Update active tab
+            const tabs = document.querySelectorAll('#professor-dashboard .tab');
+            tabs.forEach((tab, index) => {
+                if (index === semester - 1) {
+                    tab.classList.add('active');
+                } else {
+                    tab.classList.remove('active');
+                }
+            });
+            
+            if (selectedStudentId) {
+                loadStudentGradesForProfessor();
+            }
+        }
+        
+        function loadStudentGrades() {
+            console.log("Loading student grades");
+            if (currentUserType === 'student') {
+                loadStudentGradesForStudent();
+            } else if (currentUserType === 'professor') {
+                loadStudentGradesForProfessor();
+            }
+        }
+        
+        function loadStudentGradesForStudent() {
+            if (!currentUser || currentUserType !== 'student') {
+                console.log("Cannot load grades - not logged in as student");
+                return;
+            }
+            
+            console.log(`Loading grades for student ${currentUser} semester ${currentSemester}`);
+            const gradesTable = document.getElementById('student-grades');
+            gradesTable.innerHTML = '';
+            
+            const semesterGrades = gradingSystem.students[currentUser].grades[currentSemester];
+            
+            if (semesterGrades.length === 0) {
+                const row = document.createElement('tr');
+                row.innerHTML = `<td colspan="6" style="text-align: center;">No grades available for this semester</td>`;
+                gradesTable.appendChild(row);
+                
+                // Update semester average
+                document.getElementById('semester-average').textContent = 'N/A';
+                console.log("No grades found for this semester");
+                return;
+            }
+            
+            semesterGrades.forEach(subject => {
+                const row = document.createElement('tr');
+                
+                row.innerHTML = `
+                    <td>${subject.code || ''}</td>
+                    <td>${subject.name || ''}</td>
+                    <td>${subject.units || ''}</td>
+                    <td>${subject.midtermGrade !== undefined ? subject.midtermGrade.toFixed(2) : 'N/A'}</td>
+                    <td>${subject.finalGrade !== undefined ? subject.finalGrade.toFixed(2) : 'N/A'}</td>
+                    <td>${subject.finalAverage !== undefined ? subject.finalAverage.toFixed(2) : 'N/A'}</td>
+                `;
+                
+                gradesTable.appendChild(row);
+            });
+            
+            // Calculate and display semester average
+            const semesterAverage = gradingSystem.getSemesterAverage(currentUser, currentSemester);
+            document.getElementById('semester-average').textContent = 
+                semesterAverage !== undefined ? semesterAverage.toFixed(2) : 'N/A';
+        }
+        
+        function populateStudentDropdown() {
+            console.log("Populating student dropdown");
+            const select = document.getElementById('student-select');
+            select.innerHTML = '<option value="">-- Select a student --</option>';
+            
+            for (const studentId in gradingSystem.students) {
+                const option = document.createElement('option');
+                option.value = studentId;
+                option.textContent = `${studentId} - ${gradingSystem.students[studentId].name}`;
+                select.appendChild(option);
+            }
+            console.log(`Added ${Object.keys(gradingSystem.students).length} students to dropdown`);
+        }
+        
+        function loadStudentGradesForProfessor() {
+            selectedStudentId = document.getElementById('student-select').value;
+            if (!selectedStudentId) {
+                console.log("No student selected");
+                return;
+            }
+            
+            console.log(`Loading grades for student ${selectedStudentId} semester ${professorCurrentSemester}`);
+            const gradesTable = document.getElementById('professor-grades');
+            gradesTable.innerHTML = '';
+            
+            const semesterGrades = gradingSystem.students[selectedStudentId].grades[professorCurrentSemester];
+            
+            if (semesterGrades.length === 0) {
+                const row = document.createElement('tr');
+                row.innerHTML = `<td colspan="7" style="text-align: center;">No subjects available for this semester</td>`;
+                gradesTable.appendChild(row);
+                
+                // Update semester average
+                document.getElementById('professor-semester-average').textContent = 'N/A';
+                console.log("No subjects found for this semester");
+                return;
+            }
+            
+            semesterGrades.forEach((subject, index) => {
+                const row = document.createElement('tr');
+                const gradeKey = `${selectedStudentId}-${professorCurrentSemester}-${index}`;
+                
+                // Check if the current professor is the creator of this subject
+                const isCreator = subject.createdBy === currentUser || subject.createdBy === 'system';
+                const canEdit = isCreator || subject.createdBy === undefined;
+                console.log(`Subject ${subject.code} canEdit: ${canEdit}, createdBy: ${subject.createdBy}`);
+                
+                // Create grade options from 1.00 to 5.00 with 0.25 intervals
+                let midtermGradeOptions = '<option value="">Select Grade</option>';
+                let finalGradeOptions = '<option value="">Select Grade</option>';
+                for (let g = 1.00; g <= 5.00; g += 0.25) {
+                    const gradeValue = g.toFixed(2);
+                    const midtermSelected = subject.midtermGrade === parseFloat(gradeValue) ? 'selected' : '';
+                    const finalSelected = subject.finalGrade === parseFloat(gradeValue) ? 'selected' : '';
+                    midtermGradeOptions += `<option value="${gradeValue}" ${midtermSelected}>${gradeValue}</option>`;
+                    finalGradeOptions += `<option value="${gradeValue}" ${finalSelected}>${gradeValue}</option>`;
+                }
+                
+                // Determine if fields should be editable or read-only
+                const codeField = canEdit ? 
+                    `<input type="text" class="subject-input" id="code-${gradeKey}" value="${subject.code || ''}" 
+                      onchange="updateSubjectField('${gradeKey}', 'code', this.value)">` :
+                    `<div class="read-only-field">${subject.code || ''}</div>`;
+                
+                const nameField = canEdit ? 
+                    `<input type="text" class="subject-input" id="name-${gradeKey}" value="${subject.name || ''}" 
+                      onchange="updateSubjectField('${gradeKey}', 'name', this.value)">` :
+                    `<div class="read-only-field">${subject.name || ''}</div>`;
+                
+                const unitsField = canEdit ? 
+                    `<input type="number" class="subject-input" id="units-${gradeKey}" value="${subject.units || ''}" 
+                      onchange="updateSubjectField('${gradeKey}', 'units', this.value)" min="1" max="5">` :
+                    `<div class="read-only-field">${subject.units || ''}</div>`;
+                
+                const midtermGradeField = canEdit ? 
+                    `<select class="grade-dropdown" id="midterm-grade-${gradeKey}" onchange="updateSubjectField('${gradeKey}', 'midtermGrade', this.value)">
+                        ${midtermGradeOptions}
+                    </select>` :
+                    `<div class="read-only-field">${subject.midtermGrade !== undefined ? subject.midtermGrade.toFixed(2) : 'N/A'}</div>`;
+                
+                const finalGradeField = canEdit ? 
+                    `<select class="grade-dropdown" id="final-grade-${gradeKey}" onchange="updateSubjectField('${gradeKey}', 'finalGrade', this.value)">
+                        ${finalGradeOptions}
+                    </select>` :
+                    `<div class="read-only-field">${subject.finalGrade !== undefined ? subject.finalGrade.toFixed(2) : 'N/A'}</div>`;
+                
+                const removeButton = canEdit ? 
+                    `<button class="edit-grade" onclick="removeSubject('${gradeKey}', ${index})">
+                        Remove
+                    </button>` : '';
+                
+                row.innerHTML = `
+                    <td>${codeField}</td>
+                    <td>${nameField}</td>
+                    <td>${unitsField}</td>
+                    <td>${midtermGradeField}</td>
+                    <td>${finalGradeField}</td>
+                    <td>
+                        <div class="read-only-grade">
+                            ${subject.finalAverage !== undefined ? subject.finalAverage.toFixed(2) : 'N/A'}
+                        </div>
+                    </td>
+                    <td>
+                        ${removeButton}
+                    </td>
+                `;
+                
+                gradesTable.appendChild(row);
+            });
+            
+            // Calculate and display semester average
+            const semesterAverage = gradingSystem.getSemesterAverage(selectedStudentId, professorCurrentSemester);
+            document.getElementById('professor-semester-average').textContent = 
+                semesterAverage !== undefined ? semesterAverage.toFixed(2) : 'N/A';
+        }
+        
+        function updateSubjectField(gradeKey, field, value) {
+            console.log(`Updating field ${field} with value ${value} for ${gradeKey}`);
+            const [studentId, semester, index] = gradeKey.split('-');
+            
+            // Get the current subject
+            const subject = gradingSystem.students[studentId].grades[semester][index];
+            
+            // Check if the current professor can edit this subject
+            const canEdit = subject.createdBy === currentUser || subject.createdBy === undefined || subject.createdBy === 'system';
+            
+            if (!canEdit) {
+                alert('You can only edit subjects you created.');
+                console.log(`Unauthorized edit attempt by ${currentUser} on subject created by ${subject.createdBy}`);
+                return;
+            }
+            
+            // Update the field
+            if (field === 'midtermGrade' || field === 'finalGrade') {
+                gradingSystem.students[studentId].grades[semester][index][field] = value ? parseFloat(value) : undefined;
+                console.log(`Updated ${field} to ${value}`);
+            } else if (field === 'units') {
+                gradingSystem.students[studentId].grades[semester][index][field] = value ? parseInt(value) : '';
+                console.log(`Updated ${field} to ${value}`);
+            } else {
+                gradingSystem.students[studentId].grades[semester][index][field] = value;
+                console.log(`Updated ${field} to ${value}`);
+            }
+            
+            // If this is the first edit and the subject wasn't created by anyone, mark it as created by current professor
+            if (!gradingSystem.students[studentId].grades[semester][index].createdBy && currentUserType === 'professor') {
+                gradingSystem.students[studentId].grades[semester][index].createdBy = currentUser;
+                console.log(`Marked subject as created by ${currentUser}`);
+            }
+            
+            // Recalculate averages
+            gradingSystem.students[studentId].grades[semester][index].finalAverage = 
+                gradingSystem.calculateFinalAverage(
+                    gradingSystem.students[studentId].grades[semester][index].midtermGrade,
+                    gradingSystem.students[studentId].grades[semester][index].finalGrade
+                );
+            
+            gradingSystem.calculateGPA(studentId);
+            gradingSystem.saveData();
+            showChangesSaved();
+        }
+        
+        function showChangesSaved() {
+            console.log("Showing changes saved message");
+            const savedMsg = document.getElementById('changes-saved');
+            savedMsg.style.display = 'inline';
+            setTimeout(() => {
+                savedMsg.style.display = 'none';
+            }, 2000);
+        }
+        
+        function addNewSubject() {
+            if (!selectedStudentId) {
+                alert('Please select a student first');
+                console.log("Attempt to add subject without selecting student");
+                return;
+            }
+            
+            const newSubject = {
+                code: 'NEW' + (gradingSystem.students[selectedStudentId].grades[professorCurrentSemester].length + 101),
+                name: 'New Subject',
+                units: 3,
+                midtermGrade: undefined,
+                finalGrade: undefined,
+                finalAverage: undefined,
+                createdBy: currentUser
+            };
+            
+            console.log(`Adding new subject for student ${selectedStudentId}:`, newSubject);
+            gradingSystem.students[selectedStudentId].grades[professorCurrentSemester].push(newSubject);
+            gradingSystem.saveData();
+            showChangesSaved();
+            loadStudentGradesForProfessor();
+        }
+        
+        function removeSubject(gradeKey, index) {
+            if (!confirm('Are you sure you want to remove this subject?')) {
+                console.log("Subject removal cancelled");
+                return;
+            }
+            
+            const [studentId, semester] = gradeKey.split('-');
+            
+            // Check if the current professor can remove this subject
+            const subject = gradingSystem.students[studentId].grades[semester][index];
+            const canRemove = subject.createdBy === currentUser || subject.createdBy === undefined || subject.createdBy === 'system';
+            
+            if (!canRemove) {
+                alert('You can only remove subjects you created.');
+                console.log(`Unauthorized removal attempt by ${currentUser} on subject created by ${subject.createdBy}`);
+                return;
+            }
+            
+            console.log(`Removing subject ${subject.code} from student ${studentId}`);
+            gradingSystem.students[studentId].grades[semester].splice(index, 1);
+            gradingSystem.calculateGPA(studentId);
+            gradingSystem.saveData();
+            showChangesSaved();
+            loadStudentGradesForProfessor();
+        }
+        
+        function getOrdinal(n) {
+            const s = ["th", "st", "nd", "rd"];
+            const v = n % 100;
+            return n + (s[(v - 20) % 10] || s[v] || s[0]);
+        }
+
+        // Debugging helper - clear all data
+        function clearAllData() {
+            localStorage.removeItem('studentGradingData');
+            console.log("All data cleared");
+            location.reload();
+        }
+    </script>
+</body>
+</html>
